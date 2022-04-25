@@ -13,6 +13,7 @@ public final class ButtonsView: UIView {
     public var firstButton: UIButton =  {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.textAlignment = .left
         button.titleLabel?.font = Constants.buttonFont
         button.setTitleColor(.black, for: .normal)
         return button
@@ -22,6 +23,7 @@ public final class ButtonsView: UIView {
         let button = UIButton(type: .system)
         button.titleLabel?.font = Constants.buttonFont
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.textAlignment = .right
         button.setTitleColor(UIColor.mainApp(), for: .normal)
         return button
     }()
@@ -68,7 +70,7 @@ private extension ButtonsView {
         firstButton.widthAnchor.constraint(equalToConstant: Constants.buttonWidth).isActive = true
         firstButton.heightAnchor.constraint(equalToConstant: Constants.buttonFont.lineHeight).isActive = true
         
-        countLabel.leadingAnchor.constraint(equalTo: firstButton.trailingAnchor,constant: 10).isActive = true
+        countLabel.leadingAnchor.constraint(equalTo: firstButton.trailingAnchor,constant: 5).isActive = true
         countLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         countLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         countLabel.heightAnchor.constraint(equalToConstant: Constants.buttonFont.lineHeight).isActive = true
