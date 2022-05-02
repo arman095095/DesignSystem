@@ -8,7 +8,12 @@
 import Foundation
 import UIKit
 
-class FooterView: UIView {
+public protocol FooterViewProtocol: UIView {
+    func start(count: Int)
+    func stop(count: Int, info: String)
+}
+
+public final class FooterView: UIView, FooterViewProtocol {
 
     private let postsCountLabel: UILabel = {
         var view = UILabel()
@@ -28,7 +33,7 @@ class FooterView: UIView {
     }()
     
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
         setupConstraints()
@@ -38,12 +43,12 @@ class FooterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func start(count: Int) {
+    public func start(count: Int) {
         postsCountLabel.text = String.localizedStringWithFormat(NSLocalizedString("news feed cells count", comment: ""), count)
         activityIndicator.startAnimating()
     }
 
-    func stop(count: Int, info: String) {
+    public func stop(count: Int, info: String) {
         postsCountLabel.text = String.localizedStringWithFormat(NSLocalizedString("news feed cells count", comment: ""), count) + "\n" + info
         activityIndicator.stopAnimating()
     }

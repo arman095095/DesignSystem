@@ -15,8 +15,6 @@ public struct Constants {
         return UIFont.systemFont(ofSize: 15, weight: .medium)
     }
     
-    public static let largeButtonHeight: CGFloat = 60
-    
     public static let buttonWidth: CGFloat = 70
     
 }

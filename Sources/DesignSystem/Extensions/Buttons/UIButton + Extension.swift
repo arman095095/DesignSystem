@@ -11,25 +11,15 @@ import Foundation
 
 public extension UIButton {
     
-    convenience init(title: String? = nil,
-                     backgroundColor: UIColor,
-                     titleColor: UIColor,
-                     font: UIFont? = UIFont.avenir20(),
-                     shadow: Bool = false,
-                     cornerRaduis: CGFloat = 4,
-                     height: CGFloat? = nil,
-                     shadowColor: UIColor? = nil) {
-        self.init(type: .system)
-        self.setTitle(title,for: .normal)
-        self.setTitleColor(titleColor,for: .normal)
+    convenience init(backgroundColor: UIColor,
+                titleColor: UIColor,
+                shadowColor: UIColor) {
+        self.init(frame: .zero)
+        self.titleLabel?.font = Constants.font
+        self.titleLabel?.textColor = titleColor
         self.backgroundColor = backgroundColor
-        self.titleLabel?.font = font
-        self.layer.cornerRadius = cornerRaduis
-        if let height = height {
-            self.heightAnchor.constraint(equalToConstant: height).isActive = true
-        }
-        if shadow { setupShadow() }
-        if shadowColor != nil { self.layer.shadowColor = shadowColor!.cgColor }
+        self.layer.cornerRadius = Constants.cornerRaduis
+        setupShadow(color: shadowColor)
     }
     
     convenience init(image: UIImage?) {
@@ -47,7 +37,8 @@ public extension UIButton {
 
 private extension UIButton {
     
-    func setupShadow() {
+    func setupShadow(color: UIColor) {
+        self.layer.shadowColor = color.cgColor
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 4)
         self.layer.shadowRadius = 4

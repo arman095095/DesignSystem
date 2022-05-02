@@ -9,7 +9,9 @@
 import UIKit
 
 public extension UIView {
-    convenience init(segment: UISegmentedControl, label: UILabel, spacing: CGFloat) {
+    convenience init(segment: UISegmentedControl,
+                     label: UILabel,
+                     spacing: CGFloat) {
         self.init()
         self.addSubview(label)
         self.addSubview(segment)
@@ -26,7 +28,8 @@ public extension UIView {
         segment.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
     
-    convenience init(imageView: UIImageView, button: UIButton) {
+    convenience init(imageView: UIImageView,
+                     button: UIButton) {
         self.init()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +51,9 @@ public extension UIView {
         button.widthAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
-    convenience init(textField: UITextField, label: UILabel, spacing: CGFloat) {
+    convenience init(textField: UITextField,
+                     label: UILabel,
+                     spacing: CGFloat) {
         self.init()
         let newView = UIView()
         newView.backgroundColor = .gray
@@ -84,7 +89,8 @@ public extension UIView {
         }
     }
     
-    convenience init(button: UIButton, label: UILabel) {
+    convenience init(button: UIButton,
+                     label: UILabel) {
         self.init()
         self.addSubview(label)
         self.addSubview(button)
@@ -102,7 +108,9 @@ public extension UIView {
         button.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
-    convenience init(button: UIButton, label: UILabel, spacing: CGFloat) {
+    convenience init(button: UIButton,
+                     label: UILabel,
+                     spacing: CGFloat) {
         self.init()
         self.addSubview(label)
         self.addSubview(button)
@@ -173,7 +181,16 @@ public extension UIView {
     }
 
     @discardableResult
-    func addConstraints(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
+    func addConstraints(_ top: NSLayoutYAxisAnchor? = nil,
+                        left: NSLayoutXAxisAnchor? = nil,
+                        bottom: NSLayoutYAxisAnchor? = nil,
+                        right: NSLayoutXAxisAnchor? = nil,
+                        topConstant: CGFloat = 0,
+                        leftConstant: CGFloat = 0,
+                        bottomConstant: CGFloat = 0,
+                        rightConstant: CGFloat = 0,
+                        widthConstant: CGFloat = 0,
+                        heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
         
         if self.superview == nil {
             return []

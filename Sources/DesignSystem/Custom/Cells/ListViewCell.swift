@@ -52,6 +52,8 @@ private extension ListViewCell {
         static let id = "ListViewCell"
         static let heightImageView: CGFloat = 40
         static let heightRow: CGFloat = 50
+        static let leading: CGFloat = 8
+        static let trailing: CGFloat = 15
     }
     
     func setupViews() {
@@ -69,10 +71,10 @@ private extension ListViewCell {
         userImageView.heightAnchor.constraint(equalToConstant: Constants.heightImageView).isActive = true
         userImageView.widthAnchor.constraint(equalToConstant: Constants.heightImageView).isActive = true
         userImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8).isActive = true
+        userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constants.leading).isActive = true
         
         userNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        userNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
-        userNameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 8).isActive = true
+        userNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constants.trailing).isActive = true
+        userNameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: Constants.leading).isActive = true
     }
 }
