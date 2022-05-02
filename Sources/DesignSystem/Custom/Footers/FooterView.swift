@@ -1,34 +1,34 @@
 //
-//  FooterView.swift
+//  File.swift
 //  
 //
 //  Created by Арман Чархчян on 02.05.2022.
 //
 
-import Foundation
 import UIKit
 
 public protocol FooterViewProtocol: UIView {
-    func start(count: Int)
-    func stop(count: Int, info: String)
+    func start()
+    func stop(info: String)
 }
 
-public final class FooterView: UIView, FooterViewProtocol {
-
-    private let postsCountLabel: UILabel = {
+public final class FooterView: UIView {
+    
+    private var infoLabel: UILabel = {
         var view = UILabel()
         view.numberOfLines = 0
         view.textAlignment = .center
         view.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        view.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        view.textColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
-    private let activityIndicator: UIActivityIndicatorView = {
-        var view = UIActivityIndicatorView()
+    
+    private var activityIndicator: CustomActivityIndicator = {
+        var view = CustomActivityIndicator()
+        view.lineWidth = 2.1
+        view.strokeColor = UIColor.mainApp()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.hidesWhenStopped = true
         return view
     }()
     
@@ -43,30 +43,34 @@ public final class FooterView: UIView, FooterViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func start(count: Int) {
-        postsCountLabel.text = String.localizedStringWithFormat(NSLocalizedString("news feed cells count", comment: ""), count)
-        activityIndicator.startAnimating()
+    public func start() {
+        infoLabel.text = ""
+        infoLabel.isHidden = true
+        activityIndicator.isHidden = false
+        activityIndicator.startLoading()
     }
-
-    public func stop(count: Int, info: String) {
-        postsCountLabel.text = String.localizedStringWithFormat(NSLocalizedString("news feed cells count", comment: ""), count) + "\n" + info
-        activityIndicator.stopAnimating()
+    
+    public func stop(info: String = "") {
+        infoLabel.text = info
+        activityIndicator.completeLoading(success: true)
+        activityIndicator.isHidden = true
+        infoLabel.isHidden = false
     }
 }
 
 private extension FooterView {
-
+    
     func setupViews() {
-        backgroundColor = .black
-        addSubview(postsCountLabel)
+        addSubview(infoLabel)
         addSubview(activityIndicator)
     }
     
     func setupConstraints() {
         activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        activityIndicator.heightAnchor.constraint(equalToConstant: 22).isActive = true
+        activityIndicator.widthAnchor.constraint(equalToConstant: 22).isActive = true
         activityIndicator.topAnchor.constraint(equalTo: bottomAnchor,constant: 5).isActive = true
-        postsCountLabel.topAnchor.constraint(equalTo: activityIndicator.bottomAnchor,constant: 5).isActive = true
-        postsCountLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        
+        infoLabel.topAnchor.constraint(equalTo: bottomAnchor, constant: 8).isActive = true
+        infoLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }
