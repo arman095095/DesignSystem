@@ -18,7 +18,7 @@ public protocol ListsHeaderTitleViewProtocol: UIView {
 
 public final class ListsHeaderTitleView: UIView, ListsHeaderTitleViewProtocol {
     
-    weak var output: ListsHeaderTitleViewOutput?
+    public weak var output: ListsHeaderTitleViewOutput?
     
     private let mainButton: UIButton = {
         let view = UIButton(type: .system)
