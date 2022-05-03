@@ -9,26 +9,31 @@
 import UIKit
 import Foundation
 
-public extension UIButton {
-    
-    convenience init(backgroundColor: UIColor,
-                titleColor: UIColor,
-                shadowColor: UIColor) {
-        self.init(frame: .zero)
-        self.titleLabel?.font = Constants.font
-        self.titleLabel?.textColor = titleColor
+extension UIButton {
+    public convenience init(backgroundColor: UIColor,
+                     titleColor: UIColor,
+                     font: UIFont?,
+                     shadow: Bool,
+                     cornerRaduis: CGFloat,
+                     height: CGFloat,
+                     shadowColor: UIColor?) {
+        self.init(type: .system)
+        self.setTitleColor(titleColor,for: .normal)
         self.backgroundColor = backgroundColor
-        self.layer.cornerRadius = Constants.cornerRaduis
-        setupShadow(color: shadowColor)
+        self.titleLabel?.font = font
+        self.layer.cornerRadius = cornerRaduis
+        self.setupConstraints(height: height)
+        guard shadow else { return }
+        setupShadow(shadowColor: shadowColor)
     }
     
-    convenience init(image: UIImage?) {
+    public convenience init(image: UIImage) {
         self.init(type: .system)
         self.setImage(image, for: .normal)
     }
     
     //Color for image(systemtype)
-    func setupForSystemImageColor(color: UIColor) {
+    public func setupForSystemImageColor(color: UIColor) {
         let template = self.currentImage?.withRenderingMode(.alwaysTemplate)
         self.setImage(template, for: .normal)
         self.tintColor = color
@@ -37,11 +42,30 @@ public extension UIButton {
 
 private extension UIButton {
     
-    func setupShadow(color: UIColor) {
-        self.layer.shadowColor = color.cgColor
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 4)
-        self.layer.shadowRadius = 4
-        self.layer.shadowOpacity = 0.2
+    func setupShadow(shadowColor: UIColor?) {
+        if let shadowColor = shadowColor {
+            layer.shadowColor = shadowColor.cgColor
+        } else {
+            layer.shadowColor = UIColor.black.cgColor
+        }
+        layer.shadowOffset = UIButton.Constants.shadowOffset
+        layer.shadowRadius = UIButton.Constants.shadowRaduis
+        layer.shadowOpacity = UIButton.Constants.shadowOpacity
+    }
+    
+    func setupConstraints(height: CGFloat?) {
+        guard let height = height else { return }
+        heightAnchor.constraint(equalToConstant: height).isActive = true
+    }
+}
+
+extension UIButton {
+    struct Constants {
+        static let font = UIFont.avenir20()
+        static let cornerRaduis: CGFloat = 4
+        static let shadowRaduis: CGFloat = 4
+        static let height: CGFloat = 60
+        static let shadowOffset: CGSize = CGSize(width: 0, height: 4)
+        static let shadowOpacity: Float = 0.2
     }
 }

@@ -8,27 +8,7 @@
 
 import UIKit
 
-extension UIButton {
-    struct Constants {
-        static let font = UIFont.avenir20()
-        static let cornerRaduis: CGFloat = 4
-        static let shadowRaduis: CGFloat = 4
-        static let height: CGFloat = 60
-        static let shadowOffset: CGSize = CGSize(width: 0, height: 4)
-        static let shadowOpacity: Float = 0.2
-    }
-}
-
 public final class LoadButton: UIButton {
-    
-    struct Constants {
-        static let font = UIFont.avenir20()
-        static let cornerRaduis: CGFloat = 4
-        static let shadowRaduis: CGFloat = 4
-        static let height: CGFloat = 60
-        static let shadowOffset: CGSize = CGSize(width: 0, height: 4)
-        static let shadowOpacity: Float = 0.2
-    }
     
     private let activity: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView()
@@ -37,22 +17,31 @@ public final class LoadButton: UIButton {
         view.hidesWhenStopped = true
         return view
     }()
-    
+
     private let label = UILabel()
     
     public init(backgroundColor: UIColor,
-                titleColor: UIColor,
-                activityColor: UIColor,
-                shadowColor: UIColor) {
+         titleColor: UIColor,
+         font: UIFont?,
+         shadow: Bool,
+         cornerRaduis: CGFloat,
+         height: CGFloat,
+         activityColor: UIColor,
+         shadowColor: UIColor?) {
         super.init(frame: .zero)
         self.activity.color = activityColor
-        self.label.font = Constants.font
+        self.label.font = font
         self.label.textColor = titleColor
         self.backgroundColor = backgroundColor
-        self.layer.cornerRadius = Constants.cornerRaduis
+        self.layer.cornerRadius = cornerRaduis
         setupViews()
-        setupConstraints()
+        setupConstraints(with: height)
+        guard shadow else { return }
         setupShadow(shadowColor: shadowColor)
+    }
+    
+    public override func setTitle(_ title: String?, for state: UIControl.State) {
+        self.label.text = title
     }
     
     required init?(coder: NSCoder) {
@@ -69,30 +58,33 @@ public final class LoadButton: UIButton {
         label.isHidden = false
         activity.stopAnimating()
     }
-    
-    public func setTitle(_ title: String) {
-        self.label.text = title
-    }
 }
 
 //MARK: Setup UI
 private extension LoadButton {
     
+    func setupShadow(shadowColor: UIColor?) {
+        if let shadowColor = shadowColor {
+            layer.shadowColor = shadowColor.cgColor
+        } else {
+            layer.shadowColor = UIColor.black.cgColor
+        }
+        layer.shadowOffset = UIButton.Constants.shadowOffset
+        layer.shadowRadius = UIButton.Constants.shadowRaduis
+        layer.shadowOpacity = UIButton.Constants.shadowOpacity
+    }
+
     func setupViews() {
         self.addSubview(label)
         self.addSubview(activity)
-        
     }
     
-    func setupShadow(shadowColor: UIColor) {
-        self.layer.shadowColor = shadowColor.cgColor
-        self.layer.shadowOffset = Constants.shadowOffset
-        self.layer.shadowRadius = Constants.shadowRaduis
-        self.layer.shadowOpacity = Constants.shadowOpacity
-    }
-    
-    func setupConstraints() {
-        self.heightAnchor.constraint(equalToConstant: Constants.height).isActive = true
+    func setupConstraints(with height: CGFloat?) {
+        if let height = height {
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+        } else {
+            heightAnchor.constraint(equalToConstant: Constants.height).isActive = true
+        }
         label.translatesAutoresizingMaskIntoConstraints = false
         label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
