@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 public protocol ListCellViewModelProtocol {
     var name: String { get }
@@ -27,7 +26,7 @@ public struct ListCellViewModel: ListCellViewModelProtocol {
 public final class ListViewCell: UITableViewCell {
     
     public static let id = Constants.id
-    private let userImageView = UIImageView()
+    private let userImageView = ImageView()
     private let userNameLabel = UILabel()
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -41,7 +40,7 @@ public final class ListViewCell: UITableViewCell {
     }
     
     public func config(with model: ListCellViewModelProtocol) {
-        userImageView.sd_setImage(with: model.imageURL)
+        userImageView.set(imageURL: model.imageURL)
         userNameLabel.text = model.name
     }
 }
