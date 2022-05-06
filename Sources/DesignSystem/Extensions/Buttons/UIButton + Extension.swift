@@ -63,6 +63,7 @@ extension UIButton {
     struct Constants {
         static let font = UIFont.avenir20()
         static let cornerRaduis: CGFloat = 4
+        static let cornerRaduis2: CGFloat = 13
         static let shadowRaduis: CGFloat = 4
         static let height: CGFloat = 60
         static let shadowOffset: CGSize = CGSize(width: 0, height: 4)
