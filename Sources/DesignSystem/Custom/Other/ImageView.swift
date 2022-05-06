@@ -11,7 +11,7 @@ public class ImageView: UIImageView {
     
     private var currentUrlString: String?
     
-    func set(imageURL: String?) {
+    public func set(imageURL: String?) {
         self.currentUrlString = imageURL
         guard let imageURL = imageURL,
               let url = URL(string: imageURL) else {
@@ -34,7 +34,7 @@ public class ImageView: UIImageView {
         dataTask.resume()
     }
     
-    func set(imageURL: URL?) {
+    public func set(imageURL: URL?) {
         self.currentUrlString = imageURL?.absoluteString
         guard let url = imageURL else {
             self.image = nil
