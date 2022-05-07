@@ -63,7 +63,7 @@ public final class ButtonsFactory {
     
     public static var acceptButton: UIButton {
         UIButton(backgroundColor: .mainWhite(),
-                 titleColor: .mainWhite(),
+                 titleColor: .onlineColor(),
                  font: UIFont.avenir26(),
                  shadow: false,
                  cornerRaduis: UIButton.Constants.cornerRaduis2,
