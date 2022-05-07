@@ -50,8 +50,8 @@ public final class ButtonsView: UIView {
         secondButton.setTitle(secondButtonTitle, for: .normal)
     }
     
-    public func setupCount(count: Int) {
-        countLabel.text = "\(count)"
+    public func setupCount(count: String) {
+        countLabel.text = count
     }
 }
 
