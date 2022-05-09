@@ -6,20 +6,18 @@
 //
 
 import UIKit
+import CoreGraphics
 
 public final class EmptyHeaderView: UICollectionReusableView {
     
     public enum InfoType: String {
-        case emptyPeople = "Пользователей нет"
-        case emptyActiveChats = "Активных чатов нет"
+        case emptyChats = "Активных чатов нет"
         case emptyBlackList = "Заблокированных пользователей нет"
         case emptyPosts = "Постов пока нет"
         
         var imageName: String {
             switch self {
-            case .emptyPeople:
-                return "person.2"
-            case .emptyActiveChats:
+            case .emptyChats:
                 return "message"
             case .emptyBlackList:
                 return "person.2"
@@ -29,7 +27,7 @@ public final class EmptyHeaderView: UICollectionReusableView {
         }
     }
     
-    static let idHeader = "EmptyView"
+    public static let idHeader = Constants.headerID
     private var title = UILabel()
     private var imageView = UIImageView()
     
@@ -52,14 +50,12 @@ public final class EmptyHeaderView: UICollectionReusableView {
         if let text = text { title.text = text }
         imageView.image = UIImage(systemName: type.imageName)
         switch type {
-        case .emptyPeople:
-            setupConstraintsPeopleView()
-        case .emptyActiveChats:
-            setupConstraintsActiveChatsView()
+        case .emptyChats:
+            setupConstraintsChats()
         case .emptyBlackList:
-            setupConstraintsPeopleView()
+            setupConstraintsDefault()
         case .emptyPosts:
-            setupConstraintsPeopleView()
+            setupConstraintsDefault()
         }
     }
 }
@@ -78,21 +74,32 @@ private extension EmptyHeaderView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    func setupConstraintsPeopleView() {
-        imageView.topAnchor.constraint(equalTo: topAnchor, constant: UIScreen.main.bounds.height/5).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
+    func setupConstraintsDefault() {
+        imageView.topAnchor.constraint(equalTo: topAnchor, constant: UIScreen.main.bounds.height/Constants.ratio2).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: Constants.imageViewDefaultHeight).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: Constants.imageViewDefaultWidth).isActive = true
         imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        title.topAnchor.constraint(equalTo: imageView.bottomAnchor,constant: 12).isActive = true
+        title.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Constants.ratio).isActive = true
     }
     
-    func setupConstraintsActiveChatsView() {
-        imageView.topAnchor.constraint(equalTo: topAnchor, constant: UIScreen.main.bounds.height/12).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
+    func setupConstraintsChats() {
+        imageView.topAnchor.constraint(equalTo: topAnchor, constant: UIScreen.main.bounds.height/Constants.ratio).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: Constants.imageViewChatsHeight).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: Constants.imageViewDefaultWidth).isActive = true
         imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        title.topAnchor.constraint(equalTo: imageView.bottomAnchor,constant: 12).isActive = true
+        title.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Constants.ratio).isActive = true
+    }
+}
+
+private extension EmptyHeaderView {
+    struct Constants {
+        static let ratio: CGFloat = 12
+        static let ratio2: CGFloat = 5
+        static let imageViewDefaultHeight: CGFloat = 50
+        static let imageViewDefaultWidth: CGFloat = 80
+        static let imageViewChatsHeight: CGFloat = 60
+        static let headerID = "EmptyView"
     }
 }
