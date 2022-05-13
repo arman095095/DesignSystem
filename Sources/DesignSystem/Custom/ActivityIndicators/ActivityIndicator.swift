@@ -10,10 +10,10 @@ import UIKit
 
 public class CustomActivityIndicator: UIView, CAAnimationDelegate {
     
-    static let dhRingStorkeAnimationKey = "IDLoading.stroke"
-    static let dhRingRotationAnimationKey = "IDLoading.rotation"
-    static let dhCompletionAnimationDuration: TimeInterval = 0.3
-    static let dhHidesWhenCompletedDelay: TimeInterval = 0.5
+    public static let dhRingStorkeAnimationKey = "IDLoading.stroke"
+    public static let dhRingRotationAnimationKey = "IDLoading.rotation"
+    public static let dhCompletionAnimationDuration: TimeInterval = 0.3
+    public static let dhHidesWhenCompletedDelay: TimeInterval = 0.5
 
     public typealias Block = () -> Void
     
