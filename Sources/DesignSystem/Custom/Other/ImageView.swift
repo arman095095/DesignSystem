@@ -30,7 +30,19 @@ public class ImageView: UIImageView {
         }
         self.image = placeholder
         handle(url: url, completion: completion)
-        
+    }
+    
+    public func set(localURL: URL?) {
+        guard let localURL = localURL else { return }
+        guard let data = try? Data(contentsOf: localURL) else { return }
+        self.image = UIImage(data: data)
+    }
+    
+    public func set(localURL: String?) {
+        guard let localURL = localURL,
+              let url = URL(string: localURL) else { return }
+        guard let data = try? Data(contentsOf: url) else { return }
+        self.image = UIImage(data: data)
     }
     
     private func handle(url: URL, completion: @escaping (UIImage?) -> ()) {
