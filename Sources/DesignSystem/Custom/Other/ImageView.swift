@@ -32,16 +32,16 @@ public class ImageView: UIImageView {
         handle(url: url, completion: completion)
     }
     
-    public func set(localURL: URL?) {
-        guard let localURL = localURL else { return }
-        guard let data = try? Data(contentsOf: localURL) else { return }
+    public func set(localURL: URL?) throws {
+        guard let localURL = localURL,
+              let data = try? Data(contentsOf: localURL) else { throw Error.local }
         self.image = UIImage(data: data)
     }
     
-    public func set(localURL: String?) {
+    public func set(localURL: String?) throws {
         guard let localURL = localURL,
-              let url = URL(string: localURL) else { return }
-        guard let data = try? Data(contentsOf: url) else { return }
+              let url = URL(string: localURL),
+              let data = try? Data(contentsOf: url) else { throw Error.local }
         self.image = UIImage(data: data)
     }
     
@@ -74,5 +74,11 @@ public class ImageView: UIImageView {
             self.image = image
             completion(image)
         }
+    }
+}
+
+extension ImageView {
+    public enum Error: LocalizedError {
+        case local
     }
 }
