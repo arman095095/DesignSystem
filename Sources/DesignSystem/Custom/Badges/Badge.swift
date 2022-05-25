@@ -10,12 +10,12 @@ import UIKit
 
 public final class Badge: UILabel {
     
+    private var widthConstraint: NSLayoutConstraint?
+    
     public init() {
         super.init(frame: .zero)
-        backgroundColor = UIColor.mainApp()
-        font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        textColor = .white
-        textAlignment = .center
+        setupViews()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -23,11 +23,41 @@ public final class Badge: UILabel {
     }
     
     public override func layoutSubviews() {
-        self.layer.cornerRadius = self.bounds.height/2
-        self.clipsToBounds = true
+        layer.cornerRadius = self.bounds.height/2
+        clipsToBounds = true
     }
     
-    public func setBadgeCount(count: Int) {
+    public func setBadgeCount(count: Int?) {
+        guard let count = count else {
+            self.isHidden = true
+            return
+        }
+        guard count != 0 else {
+            self.isHidden = true
+            return
+        }
+        self.isHidden = false
         self.text = "\(count)"
+        let width = "\(count)".width(font: font) + Constants.badgeInset
+        let newWidth =  width < Constants.badgeHeight ? Constants.badgeHeight : width
+        widthConstraint?.constant = newWidth
+        layoutIfNeeded()
+    }
+}
+
+private extension Badge {
+    
+    func setupViews() {
+        backgroundColor = UIColor.mainApp()
+        font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        textColor = .white
+        textAlignment = .center
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func setupConstraints() {
+        self.heightAnchor.constraint(equalToConstant: Constants.badgeHeight).isActive = true
+        self.widthConstraint = widthAnchor.constraint(equalToConstant: 0)
+        widthConstraint?.isActive = true
     }
 }
