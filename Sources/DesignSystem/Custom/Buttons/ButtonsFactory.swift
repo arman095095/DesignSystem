@@ -64,7 +64,7 @@ public final class ButtonsFactory {
     public static var acceptButton: UIButton {
         UIButton(backgroundColor: .mainWhite(),
                  titleColor: .onlineColor(),
-                 font: UIFont.avenir26(),
+                 font: UIFont.avenir18(),
                  shadow: false,
                  cornerRaduis: UIButton.Constants.cornerRaduis2,
                  height: UIButton.Constants.height,
@@ -74,7 +74,7 @@ public final class ButtonsFactory {
     public static var denyButton: UIButton {
         UIButton(backgroundColor: .mainWhite(),
                  titleColor: .buttonRed(),
-                 font: UIFont.avenir26(),
+                 font: UIFont.avenir18(),
                  shadow: false,
                  cornerRaduis: UIButton.Constants.cornerRaduis2,
                  height: UIButton.Constants.height,
